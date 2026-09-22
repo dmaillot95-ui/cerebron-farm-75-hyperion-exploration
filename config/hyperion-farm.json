@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "farm_id": 75,
+  "identity": "HYPERION",
+  "domain": "exploration-discovery",
+  "status": "EXPERIMENTAL",
+  "execution_claim": "NO_INDEPENDENT_NEURAL_MODEL_YET",
+  "roles": [
+    "solution-space-explorer",
+    "alternative-method-generator",
+    "hidden-assumption-hunter",
+    "cross-domain-connector",
+    "funnel-candidate-generator"
+  ],
+  "routes": {
+    "upstream": [
+      "AGORA",
+      "CEREBRON_MASTER_ROUTER"
+    ],
+    "downstream_farms": [
+      32,
+      33,
+      34,
+      35,
+      38,
+      39,
+      42,
+      59,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73
+    ],
+    "final_gate": 72,
+    "final_fusion": "AFAH"
+  },
+  "safeguards": [
+    "REALITY>COHERENCE",
+    "EVIDENCE>CONFIDENCE",
+    "CLAIM<=EVIDENCE",
+    "CONSENSUS!=TRUTH",
+    "NO_AUTO_GOLD",
+    "NO_AUTO_TRAINING",
+    "BLIND_BRANCHES_ALLOWED"
+  ]
+}
