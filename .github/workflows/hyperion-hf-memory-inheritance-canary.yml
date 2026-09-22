@@ -1,0 +1,50 @@
+name: HYPERION HF Memory Inheritance Canary
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install --quiet --upgrade huggingface_hub
+      - name: Verify HYPERION private-memory access
+        shell: bash
+        run: |
+          mkdir -p out
+          python - <<'PY'
+          import os,json,hashlib,datetime
+          from pathlib import Path
+          from huggingface_hub import HfApi
+          repo="cerebron-omega/cerebron-private-memory"
+          token=os.environ.get("HF_TOKEN","")
+          r={"schema":"hyperion-hf-memory-inheritance-canary-v1","identity":"HYPERION","farm_id":75,
+             "repo":repo,"checked_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             "auth":"FAIL","private_repo":"UNVERIFIED","listing":"UNVERIFIED",
+             "learning_claim":"NONE","claim_scope":"HF private repository access only; not neural learning"}
+          try:
+            api=HfApi(token=token)
+            info=api.repo_info(repo_id=repo,repo_type="model")
+            r["auth"]="PASS"
+            r["private_repo"]="PASS" if bool(getattr(info,"private",False)) else "FAIL"
+            files=api.list_repo_files(repo_id=repo,repo_type="model")
+            r["listing"]="PASS"
+            r["file_count"]=len(files)
+            r["manifest_sha256"]=hashlib.sha256("\n".join(sorted(files)).encode()).hexdigest()
+          except Exception as e:
+            r["error_class"]=type(e).__name__
+          r["status"]="PASS" if r["auth"]=="PASS" and r["private_repo"]=="PASS" and r["listing"]=="PASS" else "FAIL"
+          Path("out/hyperion-hf-memory-canary.json").write_text(json.dumps(r,indent=2)+"\n")
+          print(json.dumps(r))
+          if r["status"]!="PASS": raise SystemExit(2)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hyperion-hf-memory-canary
+          path: out/hyperion-hf-memory-canary.json
+          retention-days: 14
