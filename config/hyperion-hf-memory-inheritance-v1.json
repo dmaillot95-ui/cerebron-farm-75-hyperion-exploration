@@ -1,0 +1,79 @@
+{
+  "schema": "cerebron-hyperion-hf-memory-inheritance-v1",
+  "version": "1.0",
+  "status": "CONFIGURED_NOT_YET_RUNTIME_VERIFIED",
+  "identity": "HYPERION",
+  "farm_id": 75,
+  "private_store": {
+    "provider": "Hugging Face",
+    "repo_id": "cerebron-omega/cerebron-private-memory",
+    "secret": "HF_TOKEN",
+    "github_secret_only": true
+  },
+  "inheritance": {
+    "sources": [
+      "SAPHEA",
+      "SPIRALION",
+      "ETHERION",
+      "AFAH",
+      "CEREBRON_VALIDATED_SEEDS"
+    ],
+    "readable_classes": [
+      "GOLD_VALIDATED",
+      "RED_VALIDATED"
+    ],
+    "reference_only_classes": [
+      "SILVER",
+      "OPEN",
+      "LOCAL_CURATED_SEED_V1"
+    ],
+    "forbidden_as_training_truth": [
+      "RAW",
+      "UNAUDITED",
+      "REJECT",
+      "OPEN",
+      "SILVER",
+      "LOCAL_CURATED_SEED_V1"
+    ],
+    "require": [
+      "provenance",
+      "sha256",
+      "validation_status",
+      "dependency_fingerprint"
+    ]
+  },
+  "writeback": {
+    "direct_to_gold": false,
+    "destination": "INBOX_TEMP/HYPERION",
+    "promotion_path": [
+      "QUARANTINE",
+      "AUDIT",
+      "COUNTER_AUDIT",
+      "RED_TEAM",
+      "CLEAN_REPRODUCTION",
+      "F72_REALITY_GATE",
+      "GOLD_OR_RED_OR_REJECT"
+    ]
+  },
+  "neural_learning": {
+    "status": "NOT_YET_DEMONSTRATED",
+    "path": [
+      "VALIDATED_DATASET",
+      "VERSION_AND_HASH",
+      "REVERSIBLE_ADAPTER",
+      "COLD_BENCHMARK",
+      "TRANSFER",
+      "ABLATION",
+      "REGRESSION",
+      "PROMOTE_OR_ROLLBACK"
+    ]
+  },
+  "rules": [
+    "MEMORY_NE_LEARNING",
+    "INHERITANCE_NE_TRUTH",
+    "NO_AUTO_GOLD",
+    "NO_AUTO_TRAINING",
+    "CLAIM_LE_EVIDENCE",
+    "VERIFY_BEFORE_COMMIT"
+  ]
+}
